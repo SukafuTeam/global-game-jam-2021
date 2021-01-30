@@ -30,6 +30,7 @@ public class GameController : MonoBehaviour
     
     public void Start()
     {
+        Data = MainController.Instance.StageDatas[MainController.Instance.CompletedLevel];
         CreateRune();
         _changeScene = GetComponent<ChangeScene>();
     }
@@ -92,6 +93,7 @@ public class GameController : MonoBehaviour
     public IEnumerator FinishSequence()
     {
         yield return new WaitForSeconds(1f);
+        MainController.Instance.CompletedLevel++;
         _changeScene.LoadScene("congrats_scene");
     }
 }
