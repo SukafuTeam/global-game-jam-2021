@@ -32,3 +32,12 @@ MonoBehaviour:
     Direction: 2
   - Active: 0
     Direction: 0
+  PlayerClips:
+  - {fileID: 8300000, guid: 2bca29a02ec0a4013b662491e83d9bb5, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: 886f8749688ad4506bb7167e04d7c2fa, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: e554e2d17a27840bd83ac6a7bdb9549d, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

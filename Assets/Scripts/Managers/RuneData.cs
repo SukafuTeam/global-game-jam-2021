@@ -23,4 +23,5 @@ public class RuneData : ScriptableObject
     public Sprite Image;
     public AudioClip EnemyClip;
     public IndicatorOption[] Options = new IndicatorOption[8];
+    public AudioClip[] PlayerClips = new AudioClip[8];
 }

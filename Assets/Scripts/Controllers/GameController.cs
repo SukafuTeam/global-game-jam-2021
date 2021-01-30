@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -15,6 +16,13 @@ public class GameController : MonoBehaviour
     
     public StageData Data;
 
+    public GameObject Background;
+    public Transform BackgroundStartPoint;
+    public Transform BackgroundEndPoint;
+
+    public AudioClip[] ErrorSounds;
+    public int LastError = -1;
+    
     public void Awake()
     {
         if (Instance == null)
@@ -32,6 +40,8 @@ public class GameController : MonoBehaviour
         Data = MainController.Instance.StageDatas[MainController.Instance.CompletedLevel];
         CreateRune();
         _changeScene = GetComponent<ChangeScene>();
+
+        Background.transform.position = BackgroundStartPoint.position;
     }
     
     public void CreateRune()
@@ -40,6 +50,12 @@ public class GameController : MonoBehaviour
         {
             StartCoroutine(FinishSequence());
             return;
+        }
+
+        if (LastRune == 0)
+        {
+            var time = Data.Options.Length * (PlayerPentagram.NDivisions / 2 + 1) * Conductor.Instance.secPerBeat + (Data.Options.Length * 2.2f);
+            Background.transform.DOMove(BackgroundEndPoint.position, time).SetEase(Ease.InOutQuad);
         }
         
         var runeOption = Data.Options[LastRune];
@@ -92,7 +108,18 @@ public class GameController : MonoBehaviour
     public IEnumerator FinishSequence()
     {
         yield return new WaitForSeconds(1f);
-        MainController.Instance.CompletedLevel++;
+//        MainController.Instance.CompletedLevel++;
         _changeScene.LoadScene("congrats_scene");
+    }
+
+    public AudioClip GetErrorSound()
+    {
+        var index = Random.Range(0, ErrorSounds.Length);
+        
+        while (index == LastError) 
+            index = Random.Range(0, ErrorSounds.Length);
+
+        LastError = index;
+        return ErrorSounds[index];
     }
 }

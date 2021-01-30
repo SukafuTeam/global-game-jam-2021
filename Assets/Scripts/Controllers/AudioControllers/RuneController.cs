@@ -150,11 +150,16 @@ public class RuneController : MonoBehaviour
                 State[currentIndicator] = IndicatorState.Correct;
                 var originalScale = Pentagram.BeatIndicators[currentIndicator].transform.localScale;
                 Pentagram.BeatIndicators[currentIndicator].transform.DOPunchScale(originalScale * 1.1f, 0.3f, 5, 0.5f);
+                var clip = Data.PlayerClips[currentIndicator];
+                if(clip != null)
+                    SoundController.PlaySfx(clip);
             }
             else
             {
                 State[currentIndicator] = IndicatorState.Wrong;
                 Pentagram.BeatIndicators[currentIndicator].transform.localScale *= 0.5f;
+                
+                SoundController.PlaySfx(GameController.Instance.GetErrorSound());
             }
         }
     }
