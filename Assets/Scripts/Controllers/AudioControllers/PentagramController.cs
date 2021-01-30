@@ -38,7 +38,9 @@ public class PentagramController : MonoBehaviour
                 continue;
 
             BeatPositions.Add(StartPoint.position + distance * i);
-            BeatIndicators.Add(Instantiate(IndicatorPrefab, BeatPositions[i-2], Quaternion.identity, IndicatorsParent));
+            var pos = BeatPositions[i - 2];
+            pos.y -= 1f;
+            BeatIndicators.Add(Instantiate(IndicatorPrefab, pos, Quaternion.identity, IndicatorsParent));
             BeatIndicators[i-2].SetActive(false);
         }
     }

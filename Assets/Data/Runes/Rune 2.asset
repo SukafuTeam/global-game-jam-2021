@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03610b0ce409245b48992344e5e8c8cf, type: 3}
-  m_Name: Azul
+  m_Name: Rune 2
   m_EditorClassIdentifier: 
   Name: 
   Image: {fileID: 21300000, guid: b26a7aefe373940ae8ad82f827d7462d, type: 3}
+  EnemyClip: {fileID: 8300000, guid: 679094c9e211a48f3a6f8f86a93a100f, type: 3}
   Options:
   - Active: 1
     Direction: 2
@@ -23,9 +24,9 @@ MonoBehaviour:
     Direction: 0
   - Active: 0
     Direction: 0
-  - Active: 1
-    Direction: 0
   - Active: 0
+    Direction: 0
+  - Active: 1
     Direction: 0
   - Active: 1
     Direction: 0

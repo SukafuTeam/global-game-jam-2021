@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Diagnostics;
 using DG.Tweening;
 using UnityEngine;
 
@@ -35,7 +34,7 @@ public class RuneController : MonoBehaviour
     {
         var seq = DOTween.Sequence();
 
-        var xPos = IsEnemy ? 1 : -1;
+        var xPos = IsEnemy ? -1 : 1;
         seq.Append(transform.DOMove(new Vector3(xPos, 3.5f, 0), 0.5f).SetEase(Ease.InOutQuad));
         seq.AppendInterval(1f);
         seq.Append(transform.DOMove(Pentagram.StartPoint.position, 0.5f)
@@ -52,6 +51,9 @@ public class RuneController : MonoBehaviour
         while (!Conductor.Instance.IsBeat)
             yield return null;
 
+        if(IsEnemy)
+            SoundController.PlaySfx(Data.EnemyClip);
+        
         StartBeat = Conductor.Instance.lastBeat;
         EndBeat = Conductor.Instance.lastBeat + 1 + (Pentagram.NDivisions/2);
         
@@ -91,7 +93,7 @@ public class RuneController : MonoBehaviour
 
     void BeatScale()
     {
-        if (Conductor.Instance.IsBeat)
+        if (Conductor.Instance.IsBeat && !IsFinished)
         {
             transform.DOPunchScale(_initialScale * 0.05f, 0.2f, 10, 0.05f);
         }
@@ -231,13 +233,18 @@ public class RuneController : MonoBehaviour
         if(currentTime < EndBeat)
             return;
 
-        Pentagram.ResetIndicators();
+        IsFinished = true;
+
         if(!PreventNext)
             GameController.Instance.CreateRune();
-
-        IsFinished = true;
-        transform.DOScale(Vector3.zero, 1f)
-            .SetEase(Ease.OutElastic)
-            .OnComplete(() => { Destroy(gameObject); });
+        
+        transform.DOScale(Vector3.zero, 0.5f)
+            .SetEase(Ease.InCubic)
+            .OnComplete(() =>
+            {
+                Pentagram.ResetIndicators();
+                Destroy(gameObject);
+            });
     }
+
 }
