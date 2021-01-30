@@ -22,13 +22,22 @@ public class InputController {
 		get { return Input.GetKeyDown(KeyCode.LeftArrow); }
 	}
 
-	public static bool Restart
+	public static bool Start
 	{
-		get { return Input.GetKeyDown(KeyCode.R); }
+		get { return Input.GetKeyDown(KeyCode.Space); }
 	}
 
-	public static bool Undo
+	public static bool MultiPress
 	{
-		get { return Input.GetKeyDown(KeyCode.Z); }
+		get
+		{
+			var amount = (Up ? 1 : 0) + (Right ? 1 : 0) + (Down ? 1 : 0) + (Left ? 1 : 0);
+			return amount < 2;
+		}
+	}
+
+	public static bool AnyPress
+	{
+		get { return Up || Right || Down || Left; }
 	}
 }
