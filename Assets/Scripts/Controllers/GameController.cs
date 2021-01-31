@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour
     public StageData Data;
 
     public GameObject Background;
+    public GameObject Midground;
+    public GameObject Foreground;
     public Transform BackgroundStartPoint;
     public Transform BackgroundEndPoint;
 
@@ -52,6 +54,8 @@ public class GameController : MonoBehaviour
         _changeScene = GetComponent<ChangeScene>();
 
         Background.transform.position = BackgroundStartPoint.position;
+        Midground.transform.position = BackgroundStartPoint.position;
+        Foreground.transform.position = BackgroundStartPoint.position;
     }
     
     public void CreateRune()
@@ -66,6 +70,9 @@ public class GameController : MonoBehaviour
         {
             var time = Data.Options.Length * (PlayerPentagram.NDivisions / 2 + 1) * Conductor.Instance.secPerBeat + (Data.Options.Length * 2.2f);
             Background.transform.DOMove(BackgroundEndPoint.position, time).SetEase(Ease.InOutQuad);
+            Midground.transform.DOMove(BackgroundEndPoint.position, time * 0.95f).SetEase(Ease.InOutQuad);
+            Foreground.transform.DOMove(BackgroundEndPoint.position, time * 0.9f).SetEase(Ease.InOutQuad);
+
         }
         
         var runeOption = Data.Options[LastRune];
