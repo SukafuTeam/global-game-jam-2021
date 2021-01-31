@@ -22,12 +22,15 @@ public class Conductor : MonoBehaviour
     //How many seconds have passed since the song started
     public float dspSongTime;
 
+    public int ActiveMusic;
+
     //an AudioSource attached to this GameObject that will play the music.
-    public AudioSource musicSource;
+    public AudioSource musicSource1;
+    public AudioSource musicSource2;
+    public AudioSource musicSource3;
 
     public int lastBeat;
     public bool IsBeat;
-    public bool StrongBeat;
 
     void Awake()
     {
@@ -51,8 +54,15 @@ public class Conductor : MonoBehaviour
         dspSongTime = (float)AudioSettings.dspTime;
 
         //Start the music
-        musicSource.Play();
+        musicSource1.Play();
 
+        musicSource2.volume = 0;
+        musicSource2.Play();
+        
+        musicSource3.volume = 0;
+        musicSource3.Play();
+
+        ActiveMusic = 1;
         lastBeat = -1;
     }
 
@@ -67,8 +77,29 @@ public class Conductor : MonoBehaviour
 
         var beat = (int) songPositionInBeats;
         IsBeat = beat != lastBeat;
-
-        StrongBeat = IsBeat && beat / 4 == 0;
+        
         lastBeat = beat;
+    }
+
+    public IEnumerator ChangeMusic(int index)
+    {
+        while (!IsBeat)
+            yield return null;
+
+        musicSource1.volume = index == 1 ? 1 : 0;
+        musicSource2.volume = index == 2 ? 1 : 0;
+        musicSource3.volume = index == 3 ? 1 : 0;
+        
+        ActiveMusic = index;
+    }
+
+    public IEnumerator AllMusic()
+    {
+        while (!IsBeat)
+            yield return null;
+
+        musicSource1.volume = 1;
+        musicSource2.volume = 1;
+        musicSource3.volume = 1;
     }
 }

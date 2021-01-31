@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b227f14ed0e6b4c779eddb9c06970be3, type: 3}
   m_Name: TestStage
   m_EditorClassIdentifier: 
+  Music2index: 7
+  Music3index: 11
   Options:
   - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
     PlayerData: {fileID: 0}

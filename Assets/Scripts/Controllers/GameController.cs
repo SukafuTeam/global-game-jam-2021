@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 
@@ -25,6 +26,10 @@ public class GameController : MonoBehaviour
     
     public Transform EnemyTransform;
     public ParticleSystem EnemyHitParticle;
+    public ParticleSystem EnemyFinalParticle;
+    public ParticleSystem EnemyOrbParticle;
+    public GameObject Soul;
+    public CinemachineDollyCart SoulGuider;
     
     public void Awake()
     {
@@ -63,6 +68,13 @@ public class GameController : MonoBehaviour
         
         var runeOption = Data.Options[LastRune];
         LastRune++;
+        
+        if (LastRune == Data.Music2index && Conductor.Instance.ActiveMusic < 2)
+            StartCoroutine(Conductor.Instance.ChangeMusic(2));
+        
+        if(LastRune == Data.Music3index && Conductor.Instance.ActiveMusic < 3)
+            StartCoroutine(Conductor.Instance.ChangeMusic(3));
+
 
         var obj = Instantiate(RunePrefab, new Vector3(0, 6, 0), Quaternion.identity);
         var rune = obj.GetComponent<RuneController>();
@@ -119,25 +131,37 @@ public class GameController : MonoBehaviour
         EnemyPentagram.gameObject.SetActive(false);
 
         var seq = DOTween.Sequence();
-        var pos = new Vector3(0, 1, 0);
-        seq.Append(EnemyTransform.DOMove(pos * 2f, 2f).SetEase(Ease.OutCubic));
-        seq.Append(EnemyTransform.DOShakePosition(6f, Vector3.one * 0.3f));
+        var pos = new Vector3(0, 1.5f, 0);
+        seq.Append(EnemyTransform.DOMove(pos, 2f).SetEase(Ease.OutCubic));
+        seq.Append(EnemyTransform.DOShakePosition(4f, Vector3.one * 0.3f));
         seq.Play();
+
+        yield return new WaitForSeconds(1f);
         
+        EnemyFinalParticle.Play();
+
         yield return new WaitForSeconds(3f);
         
-        // final multiple particle play
-        
-        yield return new WaitForSeconds(3f);
-        
-        // final multiple particle stop
-        // final explosion particle play
+        StartCoroutine(Conductor.Instance.AllMusic());
+        EnemyFinalParticle.Stop();
+        EnemyOrbParticle.transform.position = EnemyTransform.position;
+        EnemyOrbParticle.Play();
         EnemyTransform.DOKill();
+
         EnemyTransform.gameObject.SetActive(false);
         
-        yield return new WaitForSeconds(3f);
+        Soul.SetActive(true);
+        
+        DOTween.To(() => SoulGuider.m_Position, x => SoulGuider.m_Position = x, 1, 15f)
+            .SetEase(Ease.InOutCubic)
+            .OnComplete(() =>  _changeScene.LoadScene("congrats_scene"));
+        
+        
+        yield return new WaitForSeconds(13f);
 
-        _changeScene.LoadScene("congrats_scene");
+        Conductor.Instance.musicSource1.DOFade(0, 2f);
+        Conductor.Instance.musicSource2.DOFade(0, 2f);
+        Conductor.Instance.musicSource3.DOFade(0, 2f);
     }
 
     public AudioClip GetErrorSound()

@@ -38,7 +38,9 @@ public class RuneController : MonoBehaviour
         var xPos = IsEnemy ? -1 : 1;
         seq.Append(transform.DOMove(new Vector3(xPos, 3.5f, 0), 0.5f).SetEase(Ease.InOutQuad));
         seq.AppendInterval(1f);
-        seq.Append(transform.DOMove(Pentagram.StartPoint.position, 0.5f)
+        var pos = Pentagram.StartPoint.position;
+        pos.y += 0.5f;
+        seq.Append(transform.DOMove(pos, 0.5f)
             .SetEase(Ease.OutQuad)
             .OnComplete(() => { StartCoroutine(StartRune()); })
         );
@@ -79,7 +81,8 @@ public class RuneController : MonoBehaviour
             var percentPosition =
                 Mathf.InverseLerp((float) StartBeat, (float) EndBeat, Conductor.Instance.songPositionInBeats);
             var desiredPosition = Vector3.Lerp(Pentagram.StartPoint.position, Pentagram.Endpoint.position, percentPosition);
-            transform.position = desiredPosition;    
+            desiredPosition.y += 0.5f;
+            transform.position = desiredPosition;
         }
 
         if (IsEnemy)
@@ -99,7 +102,7 @@ public class RuneController : MonoBehaviour
     {
         if (Conductor.Instance.IsBeat && !IsFinished)
         {
-            transform.DOPunchScale(_initialScale * 0.05f, 0.2f, 10, 0.05f);
+            transform.DOPunchScale(_initialScale * 0.1f, 0.2f, 10, 0.05f);
         }
     }
     
@@ -213,7 +216,7 @@ public class RuneController : MonoBehaviour
                 var originalScale = indicatorTransform.localScale;
                 var originalPos = indicatorTransform.position;
                 indicatorTransform.DOPunchScale(originalScale * 1.1f, 0.3f, 5, 0.5f);
-                var arrow = Instantiate(ArrowPrefab, originalPos + new Vector3(0, -0.5f, 0), Quaternion.identity, Pentagram.ArrowsParent);
+                var arrow = Instantiate(ArrowPrefab, originalPos + new Vector3(0, -1f, 0), Quaternion.identity, Pentagram.ArrowsParent);
                 var zRot = 0f; // down
                 switch (Data.Options[currentIndicator].Direction)
                 {
