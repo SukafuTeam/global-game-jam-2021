@@ -32625,6 +32625,7 @@ MonoBehaviour:
     type: 3}
   RightNotes: 0
   Lives: 5
+  LiveParent: {fileID: 226481813}
   LivesIndicators:
   - {fileID: 677741365}
   - {fileID: 918079868}

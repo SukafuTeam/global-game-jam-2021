@@ -41,6 +41,7 @@ public class GameController : MonoBehaviour
 
     public int RightNotes;
     public int Lives;
+    public GameObject LiveParent;
     public SpriteRenderer[] LivesIndicators;
     
     public void Awake()
@@ -203,6 +204,7 @@ public class GameController : MonoBehaviour
         
         PlayerPentagram.gameObject.SetActive(false);
         EnemyPentagram.gameObject.SetActive(false);
+        LiveParent.SetActive(false);
 
         var seq = DOTween.Sequence();
         var pos = new Vector3(0, 1.5f, 0);
