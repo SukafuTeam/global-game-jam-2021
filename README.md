@@ -2,7 +2,7 @@
 ### In this rhythm-based game, you can help lost souls to find their groove and scape from the void room.
 
 ## ▶️ Building and running
-Lost Souls was built using Unity. Thus, to build and run the game on you local machine, you'll need:
+Lost Souls was built using Unity. Thus, to build and run the game on your local machine, you'll need:
 * Download and install [Unity 2019.2.8f1](https://unity3d.com/get-unity/download/archive) via [Unity Hub](https://unity3d.com/get-unity/download)
 * Open the project on the Unity Hub using the appropriate version of Unity (2019.2.8f1)
 * Run the project on the editor itself or create a PC or Mac build (File → Build settings) and run (File → Build and Run)
@@ -23,3 +23,12 @@ After the learning phase, which is turn-based, you and the lost soul play a song
 - Observe the rune floating to the right side and use the appropriate  keyboard pattern to play the tunes in the right rhythm.
 - Try to memorize the rune patterns with their corresponding keyboard sequences.
 - Play a song using the memorized tunes.
+
+## 🚀 Meet the team
+### André Ferreira dos Santos | Code & Project Management [(Instagram)](https://www.instagram.com/rei_churros/) [(GitHub)](https://github.com/Andre-hl2/)
+### Andressa Valengo | Code [(Linkedin)](https://www.linkedin.com/in/valengo/) [(GitHub)](https://github.com/valengo)
+### Isabela Castro | Art & Marketing [(Linkedin)](https://www.linkedin.com/in/isa-castro/) [(Behance)](http://be.net/isabelacastro) [(Website)](https://isacastro.me/)
+### Jean Quevedo | Music & Sound Design [(Facebook)](https://www.facebook.com/quevedojean) [(SoundCloud)](https://soundcloud.com/jean-quevedo)
+### Lucas Ventura| Animation & UI [(Facebook)](https://www.facebook.com/lucas.ventura.106) [(Behance)](https://www.behance.net/lucaseraer73e8)
+
+
