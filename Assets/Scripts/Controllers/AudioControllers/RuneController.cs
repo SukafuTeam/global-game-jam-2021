@@ -29,6 +29,7 @@ public class RuneController : MonoBehaviour
     public GameObject ArrowPrefab;
 
     private Vector3 _initialScale;
+    private SpriteRenderer _spriteRenderer;
 
     public void Start()
     {
@@ -44,6 +45,7 @@ public class RuneController : MonoBehaviour
         seq.Play();
 
         _initialScale = transform.localScale;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     
     public IEnumerator StartRune()
@@ -71,12 +73,14 @@ public class RuneController : MonoBehaviour
         
         if (!isRunning)
             return;
-        
-        var percentPosition =
-            Mathf.InverseLerp((float) StartBeat, (float) EndBeat, Conductor.Instance.songPositionInBeats);
-        var desiredPosition = Vector3.Lerp(Pentagram.StartPoint.position, Pentagram.Endpoint.position, percentPosition);
 
-        transform.position = desiredPosition;
+        if (!IsFinished)
+        {
+            var percentPosition =
+                Mathf.InverseLerp((float) StartBeat, (float) EndBeat, Conductor.Instance.songPositionInBeats);
+            var desiredPosition = Vector3.Lerp(Pentagram.StartPoint.position, Pentagram.Endpoint.position, percentPosition);
+            transform.position = desiredPosition;    
+        }
 
         if (IsEnemy)
         {
@@ -242,14 +246,38 @@ public class RuneController : MonoBehaviour
 
         if(!PreventNext)
             GameController.Instance.CreateRune();
-        
-        transform.DOScale(Vector3.zero, 0.5f)
-            .SetEase(Ease.InCubic)
-            .OnComplete(() =>
-            {
-                Pentagram.ResetIndicators();
-                Destroy(gameObject);
-            });
+
+        if (IsEnemy)
+        {
+            _spriteRenderer.DOFade(0, 0.5f)
+                .SetEase(Ease.OutCubic)
+                .OnComplete(() =>
+                {
+                    Pentagram.ResetIndicators();
+                    Destroy(gameObject);
+                });
+        }
+        else
+        {
+            var seq = DOTween.Sequence();
+            seq.Append(
+                transform.DOMove(GameController.Instance.EnemyTransform.position, 0.5f)
+                    .OnComplete(() =>
+                    {
+                        GameController.Instance.HitEnemy(Data.Color);
+                    })
+            );
+            seq.Append(
+                _spriteRenderer.DOFade(0, 0.3f)
+                    .SetEase(Ease.OutCubic)
+                    .OnComplete(() =>
+                    {
+                        Pentagram.ResetIndicators();
+                        Destroy(gameObject);
+                    })
+            );
+            seq.Play();
+        }
     }
 
 }

@@ -23,6 +23,9 @@ public class GameController : MonoBehaviour
     public AudioClip[] ErrorSounds;
     public int LastError = -1;
     
+    public Transform EnemyTransform;
+    public ParticleSystem EnemyHitParticle;
+    
     public void Awake()
     {
         if (Instance == null)
@@ -109,6 +112,31 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 //        MainController.Instance.CompletedLevel++;
+
+        EnemyTransform.DOKill();
+        
+        PlayerPentagram.gameObject.SetActive(false);
+        EnemyPentagram.gameObject.SetActive(false);
+
+        var seq = DOTween.Sequence();
+        var pos = new Vector3(0, 1, 0);
+        seq.Append(EnemyTransform.DOMove(pos * 2f, 2f).SetEase(Ease.OutCubic));
+        seq.Append(EnemyTransform.DOShakePosition(6f, Vector3.one * 0.3f));
+        seq.Play();
+        
+        yield return new WaitForSeconds(3f);
+        
+        // final multiple particle play
+        
+        yield return new WaitForSeconds(3f);
+        
+        // final multiple particle stop
+        // final explosion particle play
+        EnemyTransform.DOKill();
+        EnemyTransform.gameObject.SetActive(false);
+        
+        yield return new WaitForSeconds(3f);
+
         _changeScene.LoadScene("congrats_scene");
     }
 
@@ -121,5 +149,15 @@ public class GameController : MonoBehaviour
 
         LastError = index;
         return ErrorSounds[index];
+    }
+
+    public void HitEnemy(Color color)
+    {
+        var main = EnemyHitParticle.main;
+        main.startColor = color;
+
+        EnemyTransform.DOShakePosition(0.5f, Vector3.one * 0.3f);
+        
+        EnemyHitParticle.Play();
     }
 }
