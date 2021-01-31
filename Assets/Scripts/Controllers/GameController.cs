@@ -24,12 +24,14 @@ public class GameController : MonoBehaviour
     public AudioClip[] ErrorSounds;
     public int LastError = -1;
     
+    public Transform PlayerTransform;
     public Transform EnemyTransform;
     public ParticleSystem EnemyHitParticle;
     public ParticleSystem EnemyFinalParticle;
     public ParticleSystem EnemyOrbParticle;
     public GameObject Soul;
     public CinemachineDollyCart SoulGuider;
+    public GameObject FinalSoulAnimation;
     
     public void Awake()
     {
@@ -123,7 +125,7 @@ public class GameController : MonoBehaviour
     public IEnumerator FinishSequence()
     {
         yield return new WaitForSeconds(1f);
-//        MainController.Instance.CompletedLevel++;
+        MainController.Instance.CompletedLevel++;
 
         EnemyTransform.DOKill();
         
@@ -153,15 +155,52 @@ public class GameController : MonoBehaviour
         Soul.SetActive(true);
         
         DOTween.To(() => SoulGuider.m_Position, x => SoulGuider.m_Position = x, 1, 15f)
-            .SetEase(Ease.InOutCubic)
-            .OnComplete(() =>  _changeScene.LoadScene("congrats_scene"));
-        
+            .SetEase(Ease.InOutCubic);
         
         yield return new WaitForSeconds(13f);
+        
+        var lastStage = MainController.Instance.CompletedLevel == MainController.Instance.StageDatas.Length;
+        if (!lastStage)
+        {
+            Conductor.Instance.musicSource1.DOFade(0, 2f);
+            Conductor.Instance.musicSource2.DOFade(0, 2f);
+            Conductor.Instance.musicSource3.DOFade(0, 2f);
+            
+            yield return new WaitForSeconds(2f);
+            
+            _changeScene.LoadScene("congrats_scene");
+        }
+        else
+        {
+            yield return new WaitForSeconds(2f);
 
-        Conductor.Instance.musicSource1.DOFade(0, 2f);
-        Conductor.Instance.musicSource2.DOFade(0, 2f);
-        Conductor.Instance.musicSource3.DOFade(0, 2f);
+            PlayerTransform.DOKill();
+            
+            var seq1 = DOTween.Sequence();
+            seq1.Append(PlayerTransform.DOMove(pos, 2f).SetEase(Ease.OutCubic));
+            seq1.Append(PlayerTransform.DOShakePosition(4f, Vector3.one * 0.3f));
+            seq1.Play();
+
+            yield return new WaitForSeconds(4f);
+        
+            EnemyOrbParticle.Play();
+            
+            PlayerTransform.gameObject.SetActive(false);
+
+            Instantiate(FinalSoulAnimation, Vector3.zero, Quaternion.identity);
+            
+            yield return new WaitForSeconds(15f);
+            
+            Conductor.Instance.musicSource1.DOFade(0, 2f);
+            Conductor.Instance.musicSource2.DOFade(0, 2f);
+            Conductor.Instance.musicSource3.DOFade(0, 2f);
+            
+            yield return new WaitForSeconds(2f);
+            
+            _changeScene.LoadScene("menu");
+        }
+        
+        
     }
 
     public AudioClip GetErrorSound()
