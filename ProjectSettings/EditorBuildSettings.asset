@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/menu.unity
     guid: 55310c763395e411a84cbfbe114aac43
   - enabled: 1
+    path: Assets/Scenes/waiting_room.unity
+    guid: 101df91cc33a943a1b69aa98929f2fcc
+  - enabled: 1
     path: Assets/Scenes/default_scene.unity
     guid: 8349e52f9b779426ab3ba8416e1b8810
-  - enabled: 1
-    path: Assets/Scenes/congrats_scene.unity
-    guid: 5d6f007592b1f4a8e85f8617b9f9a1da
   m_configObjects: {}

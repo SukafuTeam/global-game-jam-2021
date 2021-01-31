@@ -10,6 +10,8 @@ public class MainController : MonoBehaviour
 
     public StageData[] StageDatas;
 
+    public GameObject[] Enemies;
+
     void Awake()
     {
         if (Instance == null)

@@ -26,6 +26,10 @@ public class GameController : MonoBehaviour
     public AudioClip[] ErrorSounds;
     public int LastError = -1;
     
+    public TutorialController Tutorial;
+
+    public Camera cam;
+    
     public Transform PlayerTransform;
     public Transform EnemyTransform;
     public ParticleSystem EnemyHitParticle;
@@ -34,6 +38,10 @@ public class GameController : MonoBehaviour
     public GameObject Soul;
     public CinemachineDollyCart SoulGuider;
     public GameObject FinalSoulAnimation;
+
+    public int RightNotes;
+    public int Lives;
+    public SpriteRenderer[] LivesIndicators;
     
     public void Awake()
     {
@@ -49,15 +57,37 @@ public class GameController : MonoBehaviour
     
     public void Start()
     {
+        SoundController.Instance.BmgSource.Pause();
+        
         Data = MainController.Instance.StageDatas[MainController.Instance.CompletedLevel];
-        CreateRune();
+//        CreateRune();
         _changeScene = GetComponent<ChangeScene>();
 
+        var main = MainController.Instance;
+        Instantiate(main.Enemies[main.CompletedLevel], EnemyTransform.position, Quaternion.identity, EnemyTransform);
+        
         Background.transform.position = BackgroundStartPoint.position;
         Midground.transform.position = BackgroundStartPoint.position;
         Foreground.transform.position = BackgroundStartPoint.position;
+
+        cam.transform.position = new Vector3(0, -18.5f, -10);
+        cam.transform.DOMove(new Vector3(0, 0, -10), 3f)
+            .SetEase(Ease.InOutCubic)
+            .OnComplete(() => CreateRune());
+        
+        for (var i = 0; i < LivesIndicators.Length; i++)
+        {
+            var life = LivesIndicators[i];
+            var active = Lives > i;
+
+            var dance = life.GetComponent<MusicScaler>();
+            dance.enabled = active;
+
+            life.color = active ? Color.white : Color.grey;
+        }
     }
     
+
     public void CreateRune()
     {
         if (LastRune == Data.Options.Length)
@@ -74,6 +104,9 @@ public class GameController : MonoBehaviour
             Foreground.transform.DOMove(BackgroundEndPoint.position, time * 0.9f).SetEase(Ease.InOutQuad);
 
         }
+        
+        if (MainController.Instance.CompletedLevel == 0)
+            UpdateTutorial(LastRune);
         
         var runeOption = Data.Options[LastRune];
         LastRune++;
@@ -134,6 +167,33 @@ public class GameController : MonoBehaviour
         spriteRenderer.sprite = rune.Data.Image;
     }
 
+    public void UpdateTutorial(int rune)
+    {
+        switch (rune)
+        {
+            case 0:
+                Tutorial.SetTutorial(1);
+                break;
+            case 1:
+                Tutorial.SetTutorial(2);
+                break;
+            case 2:
+                Tutorial.SetTutorial(1);
+                break;
+            case 3:
+                Tutorial.SetTutorial(2);
+                break;
+            case 4:
+                Tutorial.SetTutorial(3);
+                break;
+            case 5:
+                Tutorial.SetTutorial(4);
+                break;
+            default:
+                break;
+        }
+    }
+    
     public IEnumerator FinishSequence()
     {
         yield return new WaitForSeconds(1f);
@@ -180,7 +240,8 @@ public class GameController : MonoBehaviour
             
             yield return new WaitForSeconds(2f);
             
-            _changeScene.LoadScene("congrats_scene");
+            SoundController.Instance.BmgSource.Play();
+            _changeScene.LoadScene("waiting_room");
         }
         else
         {
@@ -208,7 +269,9 @@ public class GameController : MonoBehaviour
             Conductor.Instance.musicSource3.DOFade(0, 2f);
             
             yield return new WaitForSeconds(2f);
-            
+
+            MainController.Instance.CompletedLevel = 0;
+            SoundController.Instance.BmgSource.Play();
             _changeScene.LoadScene("menu");
         }
         
@@ -234,5 +297,55 @@ public class GameController : MonoBehaviour
         EnemyTransform.DOShakePosition(0.5f, Vector3.one * 0.3f);
         
         EnemyHitParticle.Play();
+    }
+
+    public void UpdateLives(bool correct)
+    {
+        var shouldUpdate = false;
+
+        if (correct)
+        {
+            if (Lives == 5)
+            {
+                RightNotes = 0;
+                return;
+            }
+
+            RightNotes++;
+
+            if (RightNotes == 6)
+            {
+                Lives++;
+                RightNotes = 0;
+                shouldUpdate = true;
+            }
+        }
+        else
+        {
+            Lives--;
+            shouldUpdate = true;
+
+            cam.transform.DOShakePosition(0.2f, Vector3.one * 0.3f);
+
+            if (Lives == 0)
+            {
+                SoundController.Instance.BmgSource.Play();
+                _changeScene.LoadScene("waiting_room");
+            }
+        }
+        
+        if(!shouldUpdate)
+            return;
+
+        for (var i = 0; i < LivesIndicators.Length; i++)
+        {
+            var life = LivesIndicators[i];
+            var active = Lives > i;
+
+            var dance = life.GetComponent<MusicScaler>();
+            dance.enabled = active;
+
+            life.color = active ? Color.white : Color.grey;
+        }
     }
 }
