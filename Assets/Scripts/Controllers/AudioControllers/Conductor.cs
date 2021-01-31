@@ -89,8 +89,6 @@ public class Conductor : MonoBehaviour
         musicSource1.volume = index == 1 ? 1 : 0;
         musicSource2.volume = index == 2 ? 1 : 0;
         musicSource3.volume = index == 3 ? 1 : 0;
-        
-        ActiveMusic = index;
     }
 
     public IEnumerator AllMusic()

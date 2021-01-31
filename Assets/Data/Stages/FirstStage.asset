@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b227f14ed0e6b4c779eddb9c06970be3, type: 3}
   m_Name: FirstStage
   m_EditorClassIdentifier: 
+  Music2index: 14
+  Music3index: 14
   Options:
   - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
     PlayerData: {fileID: 0}
@@ -19,3 +21,51 @@ MonoBehaviour:
   - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
     PlayerData: {fileID: 0}
     Owner: 0
+  - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 1
+  - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 0
+  - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 2
+  - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 2
+  - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 0
+  - Data: {fileID: 11400000, guid: bd3ff46f2b1084e2d833d3a865db7b83, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 1
+  - Data: {fileID: 11400000, guid: bd3ff46f2b1084e2d833d3a865db7b83, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 0
+  - Data: {fileID: 11400000, guid: bd3ff46f2b1084e2d833d3a865db7b83, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 1
+  - Data: {fileID: 11400000, guid: bd3ff46f2b1084e2d833d3a865db7b83, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 0
+  - Data: {fileID: 11400000, guid: bd3ff46f2b1084e2d833d3a865db7b83, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 2
+  - Data: {fileID: 11400000, guid: bd3ff46f2b1084e2d833d3a865db7b83, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 2
+  - Data: {fileID: 11400000, guid: bd3ff46f2b1084e2d833d3a865db7b83, type: 2}
+    PlayerData: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
+    Owner: 2
+  - Data: {fileID: 11400000, guid: bd3ff46f2b1084e2d833d3a865db7b83, type: 2}
+    PlayerData: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
+    Owner: 2
+  - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
+    PlayerData: {fileID: 11400000, guid: bd3ff46f2b1084e2d833d3a865db7b83, type: 2}
+    Owner: 2
+  - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
+    PlayerData: {fileID: 11400000, guid: bd3ff46f2b1084e2d833d3a865db7b83, type: 2}
+    Owner: 2
+  - Data: {fileID: 11400000, guid: b2434bf2acb7b4fe98e263ba70287f58, type: 2}
+    PlayerData: {fileID: 0}
+    Owner: 2

@@ -71,12 +71,17 @@ public class GameController : MonoBehaviour
         var runeOption = Data.Options[LastRune];
         LastRune++;
         
-        if (LastRune == Data.Music2index && Conductor.Instance.ActiveMusic < 2)
-            StartCoroutine(Conductor.Instance.ChangeMusic(2));
-        
-        if(LastRune == Data.Music3index && Conductor.Instance.ActiveMusic < 3)
+        if (LastRune == Data.Music3index && Conductor.Instance.ActiveMusic < 3)
+        {
+            Conductor.Instance.ActiveMusic = 3;
             StartCoroutine(Conductor.Instance.ChangeMusic(3));
-
+        }
+        
+        if (LastRune == Data.Music2index && Conductor.Instance.ActiveMusic < 2)
+        {
+            Conductor.Instance.ActiveMusic = 2;
+            StartCoroutine(Conductor.Instance.ChangeMusic(2));
+        }
 
         var obj = Instantiate(RunePrefab, new Vector3(0, 6, 0), Quaternion.identity);
         var rune = obj.GetComponent<RuneController>();

@@ -4983,10 +4983,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2607bd4152c114ddb8421c014fa3479b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CompletedLevel: 1
+  CompletedLevel: 2
   StageDatas:
   - {fileID: 11400000, guid: 3aad2b80ddaac4e85b66e2bb624566d1, type: 2}
-  - {fileID: 11400000, guid: 551a53c9ec5854194b2648110ec1d25b, type: 2}
+  - {fileID: 11400000, guid: 3646a9b5a271e44259485275f73e671e, type: 2}
+  - {fileID: 11400000, guid: ac786fa59a8564efa95d14ef0730b039, type: 2}
 --- !u!4 &139486177
 Transform:
   m_ObjectHideFlags: 0
