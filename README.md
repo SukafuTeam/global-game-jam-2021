@@ -2,7 +2,7 @@
 ### In this rhythm-based game, you can help lost souls to find their groove and scape from the void room.
 
 ## ▶️ Building and running
-Lost Souls was built using Unity. Thus, to build and run the game on you local machine, you'll need:
+Lost Souls was built using Unity. Thus, to build and run the game on your local machine, you'll need:
 * Download and install [Unity 2019.2.8f1](https://unity3d.com/get-unity/download/archive) via [Unity Hub](https://unity3d.com/get-unity/download)
 * Open the project on the Unity Hub using the appropriate version of Unity (2019.2.8f1)
 * Run the project on the editor itself or create a PC or Mac build (File → Build settings) and run (File → Build and Run)
